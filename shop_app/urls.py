@@ -10,4 +10,7 @@ urlpatterns = [
     url(r'^types/(?P<pk>\d+)/$', views.TypeDetail.as_view(), name='type_detail'),
 
     url(r'^(?P<pk>\d+)/new_comment/$', views.CommentAddView.as_view(), name='add_comment'),
+
+    url(r'^search-form/$', views.search_form),
+    url(r'^search/$', views.search),
 ]

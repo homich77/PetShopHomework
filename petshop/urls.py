@@ -20,3 +20,4 @@ urlpatterns = [
     url(r'^shop/', include('shop_app.urls')),
     url(r'^admin/', admin.site.urls),
 ]
+
