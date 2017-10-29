@@ -1,0 +1,17 @@
+.animal {
+    margin-bottom: 50px;
+}
+
+.animal-detail {
+    width: 600px;
+    margin: auto;
+    margin-top: 30px;
+    padding: 20px;
+    border: 1px solid rgba(0,0,0,0.1);
+    border-radius: 6px;
+}
+
+.animal-detail h1 {
+    text-align: center;
+    margin-bottom: 30px;
+}

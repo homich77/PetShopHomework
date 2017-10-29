@@ -1,0 +1,16 @@
+{% extends 'shop_app/base.html' %}
+{% block content %}
+<div class="animal-detail">
+    <h1>{{ animal.breed  }}</h1>
+        <p>{{ animal.description }}<p>
+        <p>Подходящие кормы: {{ animal.feed.all|join:", " }}</p>
+    <ul>
+        {% for comment in animal.comment_set.all %}
+            <li> <p>{{ comment.comment_text }}</p> Оценка: {{ comment.mark }}</li>
+        {% endfor %}
+    </ul>
+    <div align="center">
+
+    </div>
+</div>
+{% endblock %}

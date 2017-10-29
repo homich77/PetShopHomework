@@ -1,0 +1,9 @@
+{% extends 'shop_app/base.html' %}
+{% block content %}
+    <h1>Animals types list</h1>
+    <ul>
+        {% for type in types %}
+            <li><a href="{% url 'type_detail'  type.id  %}">{{ type.type }}</a></li>
+        {% endfor %}
+    </ul>
+{% endblock %}

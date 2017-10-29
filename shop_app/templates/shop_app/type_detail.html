@@ -1,0 +1,9 @@
+{% extends 'shop_app/base.html' %}
+{% block content %}
+    <h1>{{ category.title }}</h1>
+    <ul>
+        {% for animal in type.animal_set.all %}
+            <li><a href="{% url 'animal_detail'  animal.id  %}">{{ animal.breed }}</a></li>
+        {% endfor %}
+    </ul>
+{% endblock %}
