@@ -1,6 +1,9 @@
 from django.db.models import Avg
-from django.views.generic import ListView, DetailView
+from django.http import HttpResponseRedirect, HttpResponse
+from django.template.loader import get_template
+from django.views.generic import ListView, DetailView, FormView
 
+from shop_app.forms import CommentPostForm
 from shop_app.models import Animal, Type
 
 
@@ -13,6 +16,32 @@ class AnimalList(ListView):
         context = super(AnimalList, self).get_context_data(**kwargs)
         context['animals'] = Animal.objects.all().annotate(rank=Avg('comment__mark')).order_by('-rank')
         return context
+
+
+class CommentAddView(FormView):
+    template_name = 'shop_app/add_comment.html'
+    form_class = CommentPostForm
+    success_url = '/shop/'
+
+    def post(self, request, pk):
+        animal = Animal.objects.get(pk=pk)
+        form = CommentPostForm(request.POST,
+                               request.FILES)
+
+        if form.is_valid():
+            form = form.save(commit=False)
+            form.animal = animal
+            form.save()
+            return HttpResponseRedirect('/shop/')
+        return HttpResponse("Done")
+
+    def get(self, request, pk):
+        template = get_template('shop_app/add_comment.html')
+        context = {
+            'animal': Animal.objects.get(pk=self.kwargs.get('pk')),
+            'form': CommentPostForm()
+        }
+        return HttpResponse(template.render(context, request))
 
 
 class AnimalDetails(DetailView):

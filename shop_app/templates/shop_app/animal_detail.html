@@ -10,7 +10,7 @@
         {% endfor %}
     </ul>
     <div align="center">
-
+        <a href="{% url 'add_comment' animal.id  %}" class="btn btn-default">Добавить комментарий</a>
     </div>
 </div>
 {% endblock %}
