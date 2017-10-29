@@ -76,9 +76,9 @@ def search_form(request):
 def search(request):
     if 'q' in request.GET:
         q = request.GET['q']
-        books = Animal.objects.filter(breed__icontains=q)
+        animals = Animal.objects.filter(breed__icontains=q)
         return render(request, 'shop_app/animal_list.html',
-                      {'animals': books})
+                      {'animals': animals})
 
     else:
         message = 'You submitted an empty form.'
