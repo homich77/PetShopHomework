@@ -5,7 +5,7 @@ from django.template.loader import get_template
 from django.views.generic import ListView, DetailView, FormView
 
 from shop_app.forms import CommentPostForm
-from shop_app.models import Animal, Type
+from shop_app.models import Animal, AnimalType
 
 
 class AnimalList(ListView):
@@ -54,18 +54,18 @@ class AnimalDetails(DetailView):
 
 class TypeList(ListView):
     template_name = 'shop_app/types_list.html'
-    model = Type
+    model = AnimalType
     context_object_name = 'types_list'
 
     def get_context_data(self, **kwargs):
         context = super(TypeList, self).get_context_data(**kwargs)
-        context['types'] = Type.objects.all()
+        context['types'] = AnimalType.objects.all()
         return context
 
 
 class TypeDetail(DetailView):
     template_name = 'shop_app/type_detail.html'
-    model = Type
+    model = AnimalType
     context_object_name = 'type'
 
 

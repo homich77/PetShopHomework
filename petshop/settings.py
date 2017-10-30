@@ -29,13 +29,13 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
-    'shop_app.apps.ShopAppConfig',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'shop_app',
 ]
 
 MIDDLEWARE = [
@@ -74,8 +74,8 @@ WSGI_APPLICATION = 'petshop.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'django_db',
-        'USER': 'slava',
+        'NAME': 'django_db1',
+        'USER': 'django_hm',
         'PASSWORD': 'password',
         'HOST': '127.0.0.1',
         'PORT': '5432',

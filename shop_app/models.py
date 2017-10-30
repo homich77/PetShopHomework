@@ -2,20 +2,8 @@ from django.core.validators import MaxValueValidator, MinValueValidator
 from django.db import models
 
 
-class Type(models.Model):
-    ANIMALS_TYPES = (
-        ('dog', 'dog'),
-        ('cat', 'cat'),
-        ('bird', 'bird'),
-    )
-    type = models.CharField(max_length=10, choices=ANIMALS_TYPES, default='dog')
-
-    def __str__(self):
-        return self.type
-
-
 class Animal(models.Model):
-    type = models.ForeignKey(Type, on_delete=models.CASCADE)
+    type = models.ForeignKey("AnimalType", on_delete=models.CASCADE)
     image = models.ImageField(blank=True, null=True, upload_to='image')
     breed = models.CharField(max_length=50)
     feed = models.ManyToManyField("Feed")
@@ -69,3 +57,15 @@ class Comment(models.Model):
 
     def __str__(self):
         return self.comment_title
+
+
+class AnimalType(models.Model):
+    ANIMALS_TYPES = (
+        ('dog', 'dog'),
+        ('cat', 'cat'),
+        ('bird', 'bird'),
+    )
+    type = models.CharField(max_length=10, choices=ANIMALS_TYPES, default='dog')
+
+    def __str__(self):
+        return self.type
