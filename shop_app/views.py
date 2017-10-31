@@ -69,10 +69,6 @@ class TypeDetail(DetailView):
     context_object_name = 'type'
 
 
-def search_form(request):
-    return render(request, 'shop_app/search_form.html')
-
-
 def search(request):
     if 'q' in request.GET:
         q = request.GET['q']
