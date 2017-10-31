@@ -24,13 +24,13 @@
                 <li class="nav-item">
                     <a class="nav-link" href="{% url 'types_list'  %}">Animal Categories</a>
                 </li>
-                 <li class="nav-item">
+                <li class="nav-item">
                     <a class="nav-link" href="{% url 'feed_list'  %}">Feed</a>
                 </li>
             </ul>
             <ul class="nav navbar-nav navbar-right">
                 <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle"  id="dropdown01" data-toggle="dropdown"
+                    <a class="nav-link dropdown-toggle" id="dropdown01" data-toggle="dropdown"
                        aria-haspopup="true" aria-expanded="false">Create</a>
                     <div class="dropdown-menu" aria-labelledby="dropdown01">
                         <a class="dropdown-item" href="{% url 'animal_create'  %}">Create Animal</a>
@@ -38,8 +38,10 @@
                         <a class="dropdown-item" href="{% url 'type_create'  %}">Create Category</a>
                     </div>
                 </li>
+                <li>
+                    <a class="nav-link" href="{% url 'filter'  %}">Filter Animals</a>
+                </li>
             </ul>
-            </li>
             <form class="form-inline my-2 my-lg-0" action="/shop/search/" method="get">
                 <input class="form-control mr-sm-2" type="text" name="q" placeholder="Search">
                 <button class="btn my-2 my-sm-0" type="submit">Search</button>

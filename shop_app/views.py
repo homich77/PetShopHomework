@@ -2,7 +2,7 @@ from django.db.models import Avg
 from django.http import HttpResponseRedirect, HttpResponse
 from django.shortcuts import render
 from django.template.loader import get_template
-from django.views.generic import ListView, DetailView, FormView, CreateView
+from django.views.generic import ListView, DetailView, FormView, CreateView, UpdateView
 
 from shop_app.forms import CommentPostForm, AnimalPostForm, FeedPostForm, AnimalTypeForm
 from shop_app.models import Animal, AnimalType, Feed
@@ -32,6 +32,13 @@ class AnimalDetails(DetailView):
     template_name = 'shop_app/animal_detail.html'
     context_object_name = 'animal'
     model = Animal
+
+
+class AnimalUpdateView(UpdateView):
+    form_class = AnimalPostForm
+    model = Animal
+    template_name = 'shop_app/create_form.html'
+    success_url = '/shop/'
 
 
 class FeedList(ListView):
