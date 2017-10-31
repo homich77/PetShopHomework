@@ -2,8 +2,8 @@
 {% block content %}
 <div class="animal-detail">
     <h1>{{ animal.breed  }}</h1>
+        <img src="{{ animal.image_url }}" alt="Animal image" width="100%" height="300">
         <p>{{ animal.description }}<p>
-        <p>Подходящие кормы: {{ animal.feed.all|join:", " }}</p>
     <ul>
         {% for comment in animal.comment_set.all %}
             <li> <p>{{ comment.comment_text }}</p> Оценка: {{ comment.mark }}</li>

@@ -1,12 +1,26 @@
 from django.core.validators import MaxValueValidator, MinValueValidator
 from django.db import models
+from django.urls import reverse
+
+
+class Feed(models.Model):
+    name = models.CharField(max_length=50)
+    description = models.TextField()
+    price = models.PositiveIntegerField(default=0)
+    animals = models.ManyToManyField("Animal")
+
+    def __str__(self):
+        return self.name
+
+    def get_absolute_url(self):
+        return reverse('feed_detail', kwargs={'pk': self.id})
 
 
 class Animal(models.Model):
     type = models.ForeignKey("AnimalType", on_delete=models.CASCADE)
-    image = models.ImageField(blank=True, null=True, upload_to='image')
+    image = models.ImageField(blank=True, null=True, upload_to='animals_img')
     breed = models.CharField(max_length=50)
-    feed = models.ManyToManyField("Feed")
+    color = models.CharField(max_length=50, default="black")
     description = models.TextField()
     price = models.PositiveIntegerField(default=0)
 
@@ -32,14 +46,8 @@ class Animal(models.Model):
             else:
                 return '/static/images/default_animals.jpg'
 
-
-class Feed(models.Model):
-    name = models.CharField(max_length=50)
-    description = models.TextField()
-    price = models.PositiveIntegerField(default=0)
-
-    def __str__(self):
-        return self.name
+    def get_absolute_url(self):
+        return reverse('animal_detail', kwargs={'pk': self.id})
 
 
 class Comment(models.Model):
@@ -47,12 +55,8 @@ class Comment(models.Model):
     comment_auth = models.CharField(max_length=50, default='Anonim')
     comment_text = models.TextField()
     animal = models.ForeignKey(Animal, on_delete=models.CASCADE)
-    mark = models.IntegerField(
-        default=1,
-        validators=[
-            MaxValueValidator(5),
-            MinValueValidator(1)
-        ]
+    mark = models.PositiveIntegerField(
+        choices=[(i, str(i)) for i in range(1, 6)], default=1
     )
 
     def __str__(self):
@@ -60,12 +64,10 @@ class Comment(models.Model):
 
 
 class AnimalType(models.Model):
-    ANIMALS_TYPES = (
-        ('dog', 'dog'),
-        ('cat', 'cat'),
-        ('bird', 'bird'),
-    )
-    type = models.CharField(max_length=10, choices=ANIMALS_TYPES, default='dog')
+    type = models.CharField(max_length=10, default='dog')
 
     def __str__(self):
         return self.type
+
+    def get_absolute_url(self):
+        return reverse('type_detail', kwargs={'pk': self.id})

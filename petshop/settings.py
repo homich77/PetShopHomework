@@ -75,7 +75,7 @@ WSGI_APPLICATION = 'petshop.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'django_db2',
+        'NAME': 'petshop_db',
         'USER': 'django_hm',
         'PASSWORD': 'password',
         'HOST': '127.0.0.1',
@@ -121,3 +121,5 @@ STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'static/')
 AUTH_USER_MODEL = 'users.CustomUser'
 
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media/')

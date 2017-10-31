@@ -34,3 +34,17 @@ header {
     padding: 10px;
     border-bottom: 1px solid rgba(0,0,0,0.1);
 }
+
+.type-list {
+    text-align: center;
+}
+
+.type-list p {
+    font-size: 200%;
+}
+
+.type-list ul {
+    display: inline-block;
+    text-align: initial;
+    text-size: 24px
+}
