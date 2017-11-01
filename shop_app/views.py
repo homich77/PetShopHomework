@@ -48,7 +48,6 @@ class FeedList(ListView):
 
     def get_context_data(self, **kwargs):
         context = super(FeedList, self).get_context_data(**kwargs)
-        # sort animals by rank
         context['feeds'] = Feed.objects.all()
         return context
 

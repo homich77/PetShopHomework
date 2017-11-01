@@ -20,7 +20,6 @@ from django.conf.urls.static import static
 
 urlpatterns = [
     url(r'^shop/', include('shop_app.urls')),
-    url(r'^user/', include('users.urls')),
     url(r'^admin/', admin.site.urls),
 ]
 if settings.DEBUG:

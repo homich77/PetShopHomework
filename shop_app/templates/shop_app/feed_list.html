@@ -9,8 +9,7 @@
             <div class="col-4 animal">
                 <p align="center"><a href="{% url 'feed_detail'  feed.id  %}">{{ feed.name }}</a></p>
                 <p>{{ feed.description }}</p>
-                <p>Price: {{feed.price}}</p>
-                <p>Подходит животным: {{ feed.animals.all|join:", " }}</p>>
+                <p>Подходит животным: {{ feed.animals.all|join:", "}}</p>
             </div>
             {% endfor %}
         </div>
