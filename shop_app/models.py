@@ -71,3 +71,27 @@ class AnimalType(models.Model):
 
     def get_absolute_url(self):
         return reverse('type_detail', kwargs={'pk': self.id})
+
+
+class Cart(models.Model):
+    date = models.DateTimeField(auto_now_add=True)
+    animals = models.ManyToManyField(Animal, through='OrderAnimal')
+
+    OPEN = 'open'
+    CLOSED = 'closed'
+    ORDER_STATUS = ((OPEN, 'open'), (CLOSED, 'closed'))
+    status = models.CharField(max_length=20, choices=ORDER_STATUS)
+
+    def __str__(self):
+        return self.status
+
+
+class OrderAnimal(models.Model):
+    order = models.ForeignKey(Cart, related_name='order_animals', on_delete=models.CASCADE)
+    animal = models.ForeignKey(Animal)
+    quantity = models.PositiveIntegerField()
+
+    def _get_total(self):
+        return self.animal.price * self.quantity
+
+    total_sum = property(_get_total)

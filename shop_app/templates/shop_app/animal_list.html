@@ -14,6 +14,12 @@
                 {% if animal.rank %}
                 <p class="card-text" align="right">Рейтинг: {{ animal.rank }}</p>
                 {% endif %}
+                 <form action="{{ animal.get_absolute_url }}order/" method="POST">
+                        {% csrf_token %}
+                        <input type="hidden" name="animal_id" value="{{animal.id}}">
+                        <input type="number" name="quantity" max="5" min="1" value="1">
+                        <button type="submit">Buy!</button>
+                    </form>
             </div>
             {% endfor %}
         </div>

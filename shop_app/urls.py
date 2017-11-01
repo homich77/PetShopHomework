@@ -2,6 +2,7 @@ from django.conf.urls import url
 from django_filters.views import FilterView
 
 from shop_app.filters import AnimalFilter
+from shop_app.views import CartView, AnimalOrderView, CartPayView
 from . import views
 
 urlpatterns = [
@@ -23,4 +24,8 @@ urlpatterns = [
     url(r'^filter/$', FilterView.as_view(filterset_class=AnimalFilter, template_name='search/animal_filter.html'),
         name='filter'),
     url(r'^search/$', views.search),
+
+    url(r'^cart/$', CartView.as_view(), name='cart'),
+    url(r'^(?P<pk>\d+)/order/$', view=AnimalOrderView.as_view(), name='animal_order'),
+    url(r'^cart/pay/$', CartPayView.as_view()),
 ]

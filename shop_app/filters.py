@@ -1,6 +1,6 @@
 import django_filters
-from django import forms
-from .models import Animal, Feed
+
+from .models import Animal
 
 
 class AnimalFilter(django_filters.FilterSet):

@@ -1,0 +1,17 @@
+{% extends 'shop_app/base.html' %}
+{% block content %}
+    {% if order_list %}
+        <p>Ваш заказ:<p>
+        {% for order_item in order_list %}
+            <p>Порода: {{order_item.animal.breed}}
+                Количество: <b>{{order_item.quantity}}</b> Цена <b>{{order_item.animal.price}}</b><p>
+        {% endfor %}
+    <p >К оплате: <b>{{sum}}</b></p>
+    <form action="/shop/cart/pay/" method="POST">
+        {% csrf_token %}
+        <button type="submit">Pay</button>
+    </form>
+    {% else %}
+    <p align="center">Empty. Please buy animal or two</p>
+    {% endif %}
+{% endblock %}

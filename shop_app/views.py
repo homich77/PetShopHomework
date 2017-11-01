@@ -2,10 +2,10 @@ from django.db.models import Avg
 from django.http import HttpResponseRedirect, HttpResponse
 from django.shortcuts import render
 from django.template.loader import get_template
-from django.views.generic import ListView, DetailView, FormView, CreateView, UpdateView
+from django.views.generic import ListView, DetailView, FormView, CreateView, UpdateView, TemplateView
 
 from shop_app.forms import CommentPostForm, AnimalPostForm, FeedPostForm, AnimalTypeForm
-from shop_app.models import Animal, AnimalType, Feed
+from shop_app.models import Animal, AnimalType, Feed, Cart, OrderAnimal
 
 
 class AnimalList(ListView):
@@ -116,6 +116,52 @@ class AnimalTypeDetail(DetailView):
     template_name = 'shop_app/type_detail.html'
     model = AnimalType
     context_object_name = 'type'
+
+
+class CartView(ListView):
+    model = Cart
+    context_object_name = 'order_list'
+    template_name = 'shop_app/cart.html'
+
+    def get_queryset(self):
+        cart = Cart.objects.filter(status='open')
+        if cart:
+            animals_order = OrderAnimal.objects.filter(order=cart)
+            return animals_order
+        return False
+
+    def get_context_data(self, **kwargs):
+        context = super(CartView, self).get_context_data(**kwargs)
+        cart = Cart.objects.filter(status='open')
+        if cart:
+            animals_order = OrderAnimal.objects.filter(order=cart)
+            sum = 0
+            for animal in animals_order:
+                sum += animal.total_sum
+            context['sum'] = sum
+        return context
+
+
+class CartPayView(TemplateView):
+    template_name = 'shop_app/cart.html'
+
+    def post(self, request, *args, **kwargs):
+        cart = Cart.objects.get(status='open')
+        if cart:
+            cart.status = 'closed'
+            cart.save()
+        return HttpResponseRedirect('/shop/cart')
+
+
+class AnimalOrderView(TemplateView):
+    template_name = 'shop_app/animal_list.html'
+
+    def post(self, request, *args, **kwargs):
+        cart = Cart.objects.get_or_create(status='open')[0]
+        OrderAnimal.objects.create(order=cart, animal_id=request.POST['animal_id'],
+                                   quantity=int(request.POST['quantity']))
+        cart.save()
+        return HttpResponseRedirect('/shop')
 
 
 def search(request):
