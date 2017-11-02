@@ -35,6 +35,8 @@ def signup_view(request):
         user = authenticate(username=username, password=password)
         if user is not None:
             login(request, user)
+            user.set_password(password)
+            user.save()
         return redirect('animal_list')
     context = {'form': form, }
     return render(request, 'users/signup.html', context)
