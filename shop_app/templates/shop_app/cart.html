@@ -7,7 +7,7 @@
     Количество: <b>{{order_item.quantity}}</b> Цена <b>{{order_item.animal.price}}</b><p>
     {% endfor %}
 <p>К оплате: <b>{{sum}}</b></p>
-<form action="/shop/cart/pay/" method="POST">
+<form action="{% url 'cart_pay' %}" method="POST">
     {% csrf_token %}
     <button type="submit">Pay</button>
 </form>

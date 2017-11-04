@@ -23,9 +23,9 @@ urlpatterns = [
 
     url(r'^filter/$', FilterView.as_view(filterset_class=AnimalFilter, template_name='search/animal_filter.html'),
         name='filter'),
-    url(r'^search/$', views.search),
+    url(r'^search/$', views.search, name="search"),
 
     url(r'^cart/$', CartView.as_view(), name='cart'),
     url(r'^(?P<pk>\d+)/order/$', view=AnimalOrderView.as_view(), name='animal_order'),
-    url(r'^cart/pay/$', CartPayView.as_view()),
+    url(r'^cart/pay/$', CartPayView.as_view(), name='cart_pay'),
 ]

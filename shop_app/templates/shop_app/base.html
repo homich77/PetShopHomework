@@ -44,8 +44,20 @@
                 <li>
                     <a class="nav-link" href="{% url 'filter'  %}">Filter Animals</a>
                 </li>
+                {% if not user.is_authenticated %}
+                    <li>
+                        <a class="nav-link" href="{% url 'login'  %}"> Login</a>
+                    </li>
+                    <li>
+                        <a class="nav-link" href="{% url 'signup'  %}">Sign Up</a>
+                    </li>
+                {% else %}
+                    <li>
+                        <a class="nav-link" href="{% url 'logout'  %}">Logout</a>
+                    </li>
+                {% endif %}
             </ul>
-            <form class="form-inline my-2 my-lg-0" action="/shop/search/" method="get">
+            <form class="form-inline my-2 my-lg-0" action="{% url 'search'  %}" method="get">
                 <input class="form-control mr-sm-2" type="text" name="q" placeholder="Search">
                 <button class="btn my-2 my-sm-0" type="submit">Search</button>
             </form>

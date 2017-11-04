@@ -1,6 +1,6 @@
 from django.db.models import Avg
-from django.http import HttpResponseRedirect, HttpResponse
-from django.shortcuts import render
+from django.http import HttpResponse
+from django.shortcuts import render, redirect
 from django.template.loader import get_template
 from django.views.generic import ListView, DetailView, FormView, CreateView, UpdateView, TemplateView
 
@@ -38,7 +38,7 @@ class AnimalUpdateView(UpdateView):
     form_class = AnimalPostForm
     model = Animal
     template_name = 'shop_app/create_form.html'
-    success_url = '/shop/'
+    success_url = '/'
 
 
 class FeedList(ListView):
@@ -69,7 +69,7 @@ class FeedCreateView(CreateView):
 class CommentAddView(FormView):
     template_name = 'shop_app/add_comment.html'
     form_class = CommentPostForm
-    success_url = '/shop/'
+    success_url = '/'
 
     def post(self, request, pk):
         animal = Animal.objects.get(pk=pk)
@@ -80,7 +80,7 @@ class CommentAddView(FormView):
             form = form.save(commit=False)
             form.animal = animal
             form.save()
-            return HttpResponseRedirect('/shop/')
+            return redirect('animal_list')
         return HttpResponse("Done")
 
     def get(self, request, pk):
@@ -149,7 +149,7 @@ class CartPayView(TemplateView):
         if cart:
             cart.status = 'closed'
             cart.save()
-        return HttpResponseRedirect('/shop/cart')
+        return redirect('cart')
 
 
 class AnimalOrderView(TemplateView):
@@ -160,7 +160,7 @@ class AnimalOrderView(TemplateView):
         OrderAnimal.objects.create(order=cart, animal_id=request.POST['animal_id'],
                                    quantity=int(request.POST['quantity']))
         cart.save()
-        return HttpResponseRedirect('/shop')
+        return redirect('animal_list')
 
 
 def search(request):
