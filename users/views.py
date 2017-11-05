@@ -1,5 +1,7 @@
 from django.contrib.auth import login, logout
+from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect
+from django.urls import reverse_lazy
 
 from .forms import SignUpForm, UserLoginForm
 
@@ -15,6 +17,7 @@ def login_view(request):
     return render(request, 'users/signup.html', context)
 
 
+@login_required(login_url=reverse_lazy('login'))
 def logout_view(request):
     logout(request)
     return redirect('animal_list')
@@ -30,7 +33,5 @@ def signup_view(request):
         if user is not None:
             login(request, user)
             return redirect('animal_list')
-        else:
-            print("Still None")
     context = {'form': form, }
     return render(request, 'users/signup.html', context)
