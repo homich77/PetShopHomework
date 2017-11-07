@@ -10,16 +10,10 @@ from shop_app.models import Animal, AnimalType, Feed, Cart, OrderAnimal
 
 class AnimalList(ListView):
     template_name = 'shop_app/animal_list.html'
-    model = Animal
-    context_object_name = 'animal_list'
+    queryset = Animal.objects.annotate(rank=Avg('comment__mark')).order_by('-rank')
+    context_object_name = 'animals'
 
-    def get_context_data(self, **kwargs):
-        context = super(AnimalList, self).get_context_data(**kwargs)
-        # sort animals by rank
-        context['animals'] = Animal.objects.annotate(rank=Avg('comment__mark')).order_by('-rank')
-        return context
-
-
+    
 class AnimalCreateView(CreateView):
     form_class = AnimalPostForm
     template_name = 'shop_app/create_form.html'
